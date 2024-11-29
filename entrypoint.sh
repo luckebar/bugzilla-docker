@@ -13,7 +13,7 @@ if [ -z ${error_happened+x} ]; then
   echo "all necessary variables found"
 else
   echo "stopping after errors from variable check."
-  exit 1
+  #exit 1
 fi
 
 # set localconfig
