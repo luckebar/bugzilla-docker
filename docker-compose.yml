@@ -1,5 +1,19 @@
 version: "3"
 services:
+  db:
+    hostname: ma0-tdi-mariadb
+    image: mariadb
+    container_name: ma0-tdi-mariadb
+    networks:
+      - backend
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_520_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: My12Pass34
+      MYSQL_DATABASE: bugs
+      MYSQL_USER: bugs
+      MYSQL_PASSWORD: My12Bugs34
+    ports:
+      - 3306:3306
   web:
     hostname: ma0-tdi-php-apache
     build: .
@@ -20,20 +34,7 @@ services:
       BUGZILLA_ADMIN_REALNAME: luckezilla
     depends_on:
       - db
-  db:
-    hostname: ma0-tdi-mariadb
-    image: mariadb
-    container_name: ma0-tdi-mariadb
-    networks:
-      - backend
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_520_ci
-    environment:
-      MYSQL_ROOT_PASSWORD: My12Pass34
-      MYSQL_DATABASE: bugs
-      MYSQL_USER: bugs
-      MYSQL_PASSWORD: My12Bugs34
-    ports:
-      - 3306:3306
+  
 networks:
   backend:
   frontend:
