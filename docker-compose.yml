@@ -14,7 +14,7 @@ services:
       BUGZILLA_DB_PASS: My12Bugs34
       BUGZILLA_DB_NAME: bugs
       SERVERADMIN_EMAIL: webmaster@foo.com
-      SERVERNAME: http://bugzilla.it1.eur.aruba.jenv-aruba.cloud/
+      SERVERNAME: http://bugzilla.it1.eur.aruba.jenv-aruba.cloud
       BUGZILLA_ADMIN_EMAIL: webmaster@foo.com
       BUGZILLA_ADMIN_PASS: 
       BUGZILLA_ADMIN_REALNAME: luckezilla
