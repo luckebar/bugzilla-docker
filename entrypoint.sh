@@ -13,7 +13,7 @@ if [ -z ${error_happened+x} ]; then
   echo "all necessary variables found"
 else
   echo "stopping after errors from variable check."
-  #exit 1
+  exit 1
 fi
 
 # set localconfig
@@ -39,7 +39,7 @@ cat /tmp/checksetup_answers.txt
 if [ -z "$POSTFIX_HOSTNAME" -a -z "$POSTFIX_NETWORKS" ]; then
 	    echo >&2 'error: postfix option missing '
 	        echo >&2 '  You need to specify POSTFIX_HOSTNAME and POSTFIX_NETWORKS for receiving mails from a local git server'
-		    exit 1
+		    #exit 1
 fi
 
 # Create postfix folders
