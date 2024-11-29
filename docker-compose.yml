@@ -48,6 +48,8 @@ services:
       BUGZILLA_ADMIN_EMAIL: webmaster@foo.com
       BUGZILLA_ADMIN_PASS: My123Password
       BUGZILLA_ADMIN_REALNAME: luckezilla
+      POSTFIX_HOSTNAME: aaa
+      POSTFIX_NETWORKS: bb
     depends_on:
       db:
          condition: service_healthy
