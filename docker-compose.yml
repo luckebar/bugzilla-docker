@@ -2,25 +2,33 @@ version: "3"
 services:
   db:
     hostname: ma0-tdi-mariadb
-    image: mysql #mariadb
+    image: mariadb
     container_name: ma0-tdi-mariadb
     networks:
       - backend
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_520_ci --init-file /data/application/init.sql
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: My12Pass34
       MYSQL_DATABASE: bugs
       MYSQL_USER: bugs
       MYSQL_PASSWORD: My12Bugs34
+      MARIADB_ROOT_PASSWORD: My12Pass34
+      MARIADB_DATABASE: bugs
+      MARIADB_USER: bugs
+      MARIADB_PASSWORD: My12Bugs34
+      MARIADB_API_USER: bugs
+      MARIADB_API_PASSWORD: My12Bugs34
+      MARIADB_HOST: ma0-tdi-mariadb
     ports:
       - 3306:3306
     volumes:
         - ./init.sql:/data/application/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+      test: ["CMD", "mariadb", "-ubugs", "-pMy12Bugs34", "-e", "use bugs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
   web:
     hostname: ma0-tdi-php-apache
     build: .
@@ -31,7 +39,7 @@ services:
       - frontend
     environment:
       BUGZILLA_DB_USER: bugs
-      BUGZILLA_DB_HOST: localhost
+      BUGZILLA_DB_HOST: ma0-tdi-mariadb
       BUGZILLA_DB_LOGIN: bugs
       BUGZILLA_DB_PASS: My12Bugs34
       BUGZILLA_DB_NAME: bugs
