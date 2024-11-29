@@ -2,18 +2,25 @@ version: "3"
 services:
   db:
     hostname: ma0-tdi-mariadb
-    image: mariadb
+    image: mysql #mariadb
     container_name: ma0-tdi-mariadb
     networks:
       - backend
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_520_ci
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_520_ci --init-file /data/application/init.sql
     environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: My12Pass34
       MYSQL_DATABASE: bugs
       MYSQL_USER: bugs
       MYSQL_PASSWORD: My12Bugs34
     ports:
       - 3306:3306
+    volumes:
+        - ./init.sql:/data/application/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
   web:
     hostname: ma0-tdi-php-apache
     build: .
@@ -23,18 +30,20 @@ services:
       - backend
       - frontend
     environment:
-      BUGZILLA_DB_HOST: ma0-tdi-mariadb
+      BUGZILLA_DB_USER: bugs
+      BUGZILLA_DB_HOST: localhost
       BUGZILLA_DB_LOGIN: bugs
       BUGZILLA_DB_PASS: My12Bugs34
       BUGZILLA_DB_NAME: bugs
       SERVERADMIN_EMAIL: webmaster@foo.com
-      SERVERNAME: http://localhost
+      SERVERNAME: http://bugzilla.it1.eur.aruba.jenv-aruba.cloud
       BUGZILLA_ADMIN_EMAIL: webmaster@foo.com
-      BUGZILLA_ADMIN_PASS: 
+      BUGZILLA_ADMIN_PASS: My123Password
       BUGZILLA_ADMIN_REALNAME: luckezilla
     depends_on:
-      - db
-  
+      db:
+         condition: service_healthy
 networks:
   backend:
   frontend:
+
