@@ -1,9 +1,9 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 LABEL maintainer="Stefan Pielmeier <stefan@symlinux.com>"
 LABEL version 0.2
 LABEL description="Docker image for bugzilla on Ubuntu 20.04 using PerlCGI/Apache2"
 
-ENV bugzilla_branch=release-5.2-stable
+ENV bugzilla_branch=release-5.0-stable
 ENV APACHE_USER=www-data
 
 # disable prompt during package install
