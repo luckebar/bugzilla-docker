@@ -29,6 +29,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+    restart: always
   web:
     hostname: ma0-tdi-php-apache
     build: .
@@ -53,6 +54,7 @@ services:
     depends_on:
       db:
          condition: service_healthy
+    restart: always
 networks:
   backend:
   frontend:
